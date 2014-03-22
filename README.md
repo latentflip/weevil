@@ -18,6 +18,9 @@ If you're kinda crazy, then you might find this handy.
 ## Examples
 
 ### Basic Usage
+
+Pass weevil a string with javascript code in it, that'll be run in the webworker.
+
 ```javascript
 var weevil = require('weevil');
 
@@ -33,7 +36,7 @@ var workerCode = [
 weevil(workerCode);
 ```
 
-we can simplify generating the code with [deval](http:://github.com/latentflip/deval):
+we can simplify generating the code with [deval](http:://github.com/latentflip/deval), of course it still can't access any of the variables in scope of the host page, but at least it's easier to write the code.
 
 ```javascript
 var weevil = require('weevil');
@@ -54,10 +57,14 @@ weevil(workerCode);
 
 In the context of the webworker, there is a `weevil` object which effectively acts as a simple event emitter. In the context of the main thread, the worker object returned from calling `weevil(theCode)` has the same methods:
 
-* `weevil.emit(name, [args...])` / `worker.emit(name, [args...])` - send a message to the host page / to the worker. With `name`, and optional `args` list which the `on` callback will receive. Also aliased as `weevil.send` / `worker.send`.
-* `weevil.on(name, callback)` / `worker.on(name, callback)` - listen to messages from the host page / from the worker. With `name` of the messages to listen for, and `callback` to run when the message is received. The callback will receive the list of `args...` from the `emit` call in the other process.
-* `weevil.once(name, callback)` / `worker.once(name, callback)` - as per `.on()`, listen to messages from the host page / from the worker, but only run the callback only once.
-* `weevil.off(name, [callback])` / `worker.off(name, [callback])` - unregister listen callback(s). If a `callback` is specified, only that callback will be deregistered for the `name`d event. If no `callback` is specified, all callbacks for message `name` will be deregistered.
+* `weevil.emit(name, [args...])` / `worker.emit(name, [args...])` 
+    * send a message to the host page / to the worker. With `name`, and optional `args` list which the `on` callback will receive. Also aliased as `weevil.send` / `worker.send`.
+* `weevil.on(name, callback)` / `worker.on(name, callback)` 
+    * listen to messages from the host page / from the worker. With `name` of the messages to listen for, and `callback` to run when the message is received. The callback will receive the list of `args...` from the `emit` call in the other process.
+* `weevil.once(name, callback)` / `worker.once(name, callback)` 
+    * as per `.on()`, listen to messages from the host page / from the worker, but only run the callback only once.
+* `weevil.off(name, [callback])` / `worker.off(name, [callback])` 
+    * unregister listen callback(s). If a `callback` is specified, only that callback will be deregistered for the `name`d event. If no `callback` is specified, all callbacks for message `name` will be deregistered.
 
 (Example: again using deval to generate the worker code string).
 
@@ -84,3 +91,11 @@ worker.send('count-to', limit)
         alert('Worker counted to ' + limit + ' in ' + time + 'ms');
       });
 ```
+
+## Who?
+
+If you wish to heckle: [Philip Roberts](http://twitter.com/philip_roberts).
+
+## License
+
+MIT
