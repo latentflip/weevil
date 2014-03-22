@@ -12,7 +12,7 @@ test('it doesnt like, explode', function (t) {
 
 test('it receives messages from the webworker', function (t) {
     var code = deval(function () {
-        weevil.send('a-message', 'some', 'stuff', 3);
+        weevil.emit('a-message', 'some', 'stuff', 3);
     });
 
     var worker = weevil(code);
@@ -25,10 +25,10 @@ test('it receives messages from the webworker', function (t) {
     });
 });
 
-test('it can send messages to the webworker', function (t) {
+test('it can emit messages to the webworker', function (t) {
     var code = deval(function() {
         weevil.on('do-something', function (aString, aNumber) {
-            weevil.send('did-something', "string was: " + aString, aNumber * 2);
+            weevil.emit('did-something', "string was: " + aString, aNumber * 2);
         });
     });
 
@@ -38,5 +38,5 @@ test('it can send messages to the webworker', function (t) {
              t.equals(resultNumber, 4);
              t.end();
           });
-    worker.send('do-something', 'some-string', 2);
+    worker.emit('do-something', 'some-string', 2);
 });

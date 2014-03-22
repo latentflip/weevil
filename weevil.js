@@ -28,7 +28,10 @@ function emitterFor (scope) {
             callbacks.splice(i, 1);
             return this;
         },
-        send: function (name /*, [args...] */) {
+        send: function () {
+            return this.emit.apply(this, arguments);
+        },
+        emit: function (name /*, [args...] */) {
             var args = Array.prototype.slice.call(arguments);
 
             scope.postMessage(JSON.stringify({
