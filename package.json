@@ -1,0 +1,33 @@
+{
+  "name": "weevil",
+  "version": "0.0.0",
+  "description": "WebWorker eval",
+  "main": "index.js",
+  "dependencies": {
+    "deval": "^0.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^3.33.0",
+    "tape": "~2.11.0",
+    "tape-run": "~0.1.1"
+  },
+  "testling": {
+    "files": "test.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
+  },
+  "scripts": {
+    "test": "tape test.js",
+    "browser-test": "browserify test.js | tape-run -b chrome"
+  },
+  "author": "Philip Roberts",
+  "license": "MIT"
+}
