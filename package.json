@@ -2,7 +2,7 @@
   "name": "weevil",
   "version": "0.1.0",
   "description": "WebWorker eval",
-  "main": "index.js",
+  "main": "weevil.js",
   "dependencies": {
     "deval": "^0.1.1"
   },
