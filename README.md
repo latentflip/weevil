@@ -65,6 +65,8 @@ In the context of the webworker, there is a `weevil` object which effectively ac
     * as per `.on()`, listen to messages from the host page / from the worker, but only run the callback only once.
 * `weevil.off(name, [callback])` / `worker.off(name, [callback])` 
     * unregister listen callback(s). If a `callback` is specified, only that callback will be deregistered for the `name`d event. If no `callback` is specified, all callbacks for message `name` will be deregistered.
+* `weevil.kill()` / `worker.kill()`
+    * Terminate the worker immediately, and deregister all handlers.
 
 (Example: again using deval to generate the worker code string).
 

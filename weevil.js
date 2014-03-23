@@ -1,6 +1,22 @@
 var deval = require('deval');
 
 function emitterFor (scope) {
+    var inWebworkerThread = typeof Window === void 0;
+
+    var onMessage = function (message) {
+        var cbs;
+        message = JSON.parse(message.data);
+
+        if (!message.weevil) return;
+
+        cbs = weevil.callbacks[message.name];
+        if (!cbs || !cbs.length) return;
+
+        cbs.forEach(function (cb) {
+            cb.apply(cb, message.args);
+        });
+    };
+
     var weevil = {
         callbacks: {},
         once: function (name, fn) {
@@ -41,22 +57,19 @@ function emitterFor (scope) {
             }));
 
             return this;
+        },
+        kill: function () {
+            this.callbacks = {};
+            scope.removeEventListener("message", onMessage, false);
+            if (inWebworkerThread) {
+                scope.close();
+            } else {
+                scope.terminate();
+            }
         }
     };
 
-    scope.onmessage = function (message) {
-        var cbs;
-        message = JSON.parse(message.data);
-
-        if (!message.weevil) return;
-
-        cbs = weevil.callbacks[message.name];
-        if (!cbs || !cbs.length) return;
-
-        cbs.forEach(function (cb) {
-            cb.apply(cb, message.args);
-        });
-    };
+    scope.addEventListener("message", onMessage, false);
 
     return weevil;
 }
