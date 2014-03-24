@@ -1,5 +1,5 @@
 var test = require('tape');
-var weevil = require('./weevil');
+var weevil = require('../weevil');
 var deval = require('deval');
 
 test('it doesnt like, explode', function (t) {
