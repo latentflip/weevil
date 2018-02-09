@@ -28,7 +28,7 @@ var weevil = require('weevil');
 var workerCode = [
     "//do something slow here",
     "for (var i=0; i<1000000; i++) {",
-    "  Math.pow(2,50);
+    "  Math.pow(2,50);",
     "}",
     "console.log('done');"
 ].join("\n");
